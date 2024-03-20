@@ -1,5 +1,6 @@
 ## Inicializar projeto
-Para rodar o sistema em desenvolvimento é nescessário apenas executar `docker-compose up --build --remove-orphans -d` e estará disponibilizada na link [localhost](https://localhost:5003/index.html)
+
+Para rodar o sistema em desenvolvimento é nescessário apenas executar `docker-compose up --build --remove-orphans -d` e estará disponibilizada na link [localhost](http://localhost:5003/index.html)
 
 ## Sobre
 
