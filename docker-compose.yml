@@ -23,13 +23,12 @@ services:
       context: ./webapi/ClienteAPI
       dockerfile: Dockerfile
     ports:
-      - "5003:5003"
+      - "5003:5000"
     depends_on:
       - mssqltools
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS=https://+:5003;http://+:5000
-      - ASPNETCORE_HTTPS_PORT=5003
+      - ASPNETCORE_URLS=http://+:5000
       - ASPNETCORE_Kestrel__Certificates__Default__Password=mypassword123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/certificate.pfx
     volumes:
