@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  sql-server:
+    build:
+      context: ./data-base
+    ports:
+      - "1432:1433"
+    networks:
+      - elastic
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sql-server
+    volumes:
+      - ./data-base/init-database.sh:/tmp/init-database.sh
+      - ./data-base/sql-scripts/init-cliente-db.sql:/tmp/init-cliente-db.sql
+    command: /bin/bash ./tmp/init-database.sh
+    networks:
+      - elastic
+  api:
+    build:
+      context: ./webapi/ClienteAPI
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mssqltools
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:5003;http://+:5000
+      - ASPNETCORE_HTTPS_PORT=5003
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=mypassword123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/certificate.pfx
+    volumes:
+      - ./webapi/ClienteAPI/certificate.pfx:/https/certificate.pfx:ro
+    restart: always
+    networks:
+      - elastic
+networks:
+  elastic:
+    driver: bridge
