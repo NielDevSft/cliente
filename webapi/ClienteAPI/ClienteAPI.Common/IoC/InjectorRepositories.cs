@@ -9,7 +9,6 @@ namespace ClienteAPI.Common.IoC
         public static void AddRepositories(IServiceCollection services)
         {
             services.AddScoped<IClienteRepository, ClienteRepository>();
-            //services.AddScoped<IItemPedidoRepository, ItemPedidoRepository>();
         }
     }
 }

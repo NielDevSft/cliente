@@ -106,6 +106,7 @@ namespace ClienteAPI.API.Controllers
                     NomeComleto = cliente.NomeComleto,
                     DtaNascimento = cliente.DtaNascimento,
                     ValRenda = cliente.ValRenda,
+                    UsuarioUuid = Guid.Parse(cliente.UserUuid),
                     CPF = cliente.CPF,
                 });
                 usuarioDto = cliente with
@@ -120,7 +121,7 @@ namespace ClienteAPI.API.Controllers
                 logger.LogError(ex.Message);
                 return BadRequest(ex.Message);
             }
-            return Created("success", usuarioDto);
+            return Ok(usuarioDto);
         }
 
 

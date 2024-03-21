@@ -15,19 +15,19 @@ namespace ClienteAPI.Application.Services
                     .SerializeObject(cliente
                     .ValidationResult
                     .Errors));
-            _clienteRepository.Add(cliente);
-            await Task.Run(() => _clienteRepository.SaveChanges());
+            
+            await Task.Run(() => _clienteRepository.Add(cliente));
 
             _clienteRepository.SaveChanges();
+            
             return cliente;
         }
 
         public async Task Delete(Guid uuid)
-        {
-            
-            _clienteRepository.Remove(uuid);
+        {            
+            await Task.Run(() => _clienteRepository.Remove(uuid));
             _clienteRepository.SaveChanges();
-            _clienteRepository.Dispose();
+            
         }
 
         public async Task<List<Cliente>> GetAll()
@@ -36,7 +36,7 @@ namespace ClienteAPI.Application.Services
 
             clienteList.AddRange(await _clienteRepository.FindAllWhereAsync(i => !i.Removed));
 
-            _clienteRepository.Dispose();
+            
             return clienteList;
         }
 
@@ -49,14 +49,14 @@ namespace ClienteAPI.Application.Services
             {
                 throw new Exception("Item não encontrado");
             }
-            _clienteRepository.Dispose();
+            
 
             return clienteFound;
         }
 
         public async Task<Cliente> Update(Guid uuid, Cliente cliente)
         {
-            var clienteExisting = await GetById(uuid);
+            var clienteExisting = _clienteRepository.GetById(uuid);
 
             if (!cliente.IsValid())
                 throw new Exception(JsonConvert
@@ -64,15 +64,14 @@ namespace ClienteAPI.Application.Services
                     .ValidationResult
                     .Errors));
 
-            clienteExisting.NomeComleto = cliente.NomeComleto;
+            clienteExisting!.NomeComleto = cliente.NomeComleto;
             clienteExisting.DtaNascimento = cliente.DtaNascimento;
             clienteExisting.CPF = cliente.CPF;
             clienteExisting.ValRenda = cliente.ValRenda;
 
-            _clienteRepository.Update(cliente);
-            await Task.Run(() => _clienteRepository.SaveChanges());
-
+            await Task.Run(() => _clienteRepository.Update(clienteExisting));
             _clienteRepository.SaveChanges();
+            
             return cliente;
         }
     }
