@@ -5,7 +5,7 @@ API responsavel pelo gerenciamento de clientes.
 ## Visão geral
 
 Esta API foi desenvolvida em C# utilizando o framework .NET Core. Ela fornece funcionalidades para gerenciamento de clientes, aplicando boas práticas de desenvolvimento contando com uma camada de autenticação em JWT.
-Para testar a API, comente as `[Authorize]` notations nas controllers ou baixe também a API [JWTAuthentication](https://github.com/NielDevSft/JWTAuthentication), e crie um usuario, uma role com o name `CLIENTE_ADM_ROLE`, e relacione os dois pelo serviço POST: (Authentication API) `/api/Usuarios/{uuid}/Roles`.
+Para testar a API, comente as `[Authorize]` notations nas controllers ou baixe também a API [JWTAuthentication](https://github.com/NielDevSft/authentication), e crie um usuario, uma role com o name `CLIENTE_ADM_ROLE`, e relacione os dois pelo serviço POST: (Authentication API) `/api/Usuarios/{uuid}/Roles`.
 
 ## Pré-requisitos
 
