@@ -1,4 +1,5 @@
 ﻿using ClienteAPI.Application.Authentications;
+using ClienteAPI.Application.Configurations;
 using ClienteAPI.Application.SetupOptions;
 using ClienteAPI.Persistence.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,6 +18,7 @@ namespace ClienteAPI.Common.IoC
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            MvcConfiguration.AddMvcSecurity(services);
             //jwt
             var jwtTokenConfig = configuration.GetSection("JwtConfig").Get<JwtOptions>()!;
 

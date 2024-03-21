@@ -1,16 +1,19 @@
 ﻿using ClienteAPI.API.Dtos.Clientes;
 using ClienteAPI.Domain.Clientes;
 using ClienteAPI.Domain.Clientes.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClienteAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ClientesController(IClienteService clienteService,
         ILogger<ClientesController> logger) : ControllerBase
     {
         [HttpGet]
+        [Authorize(Roles = "CLIENTE_ADM_ROLE")]
         public async Task<ActionResult<ICollection<ClienteDto>>> Index()
         {
             try
@@ -35,12 +38,13 @@ namespace ClienteAPI.API.Controllers
         }
 
         [HttpGet("{uuid}")]
-        public async Task<ActionResult<ClienteDto>> Details(string uuid)
+        [Authorize(Roles = "CLIENTE_ADM_ROLE")]
+        public async Task<ActionResult<ClienteDto>> Details(Guid uuid)
         {
             ClienteDto cliente;
             try
             {
-                var clienteExisting = await clienteService.GetById(Guid.Parse(uuid));
+                var clienteExisting = await clienteService.GetById(uuid);
                 cliente = new ClienteDto(
                     clienteExisting.NomeComleto,
                     clienteExisting.DtaNascimento,
@@ -60,6 +64,7 @@ namespace ClienteAPI.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "CLIENTE_ADM_ROLE")]
         public async Task<ActionResult<ClienteDto>> Create([FromBody] ClienteDto cliente)
         {
             ClienteDto usuarioDto;
@@ -90,12 +95,13 @@ namespace ClienteAPI.API.Controllers
 
         // GET: ClienteControllers/Edit/5
         [HttpPut("{uuid}")]
-        public async Task<ActionResult<ClienteDto>> Edit(string uuid, [FromBody] ClienteDto cliente)
+        [Authorize(Roles = "CLIENTE_ADM_ROLE")]
+        public async Task<ActionResult<ClienteDto>> Edit(Guid uuid, [FromBody] ClienteDto cliente)
         {
             ClienteDto usuarioDto;
             try
             {
-                var usuarioCreated = await clienteService.Update(Guid.Parse(uuid), new Cliente()
+                var usuarioCreated = await clienteService.Update(uuid, new Cliente()
                 {
                     NomeComleto = cliente.NomeComleto,
                     DtaNascimento = cliente.DtaNascimento,
@@ -119,11 +125,12 @@ namespace ClienteAPI.API.Controllers
 
 
         [HttpDelete("{uuid}")]
-        public async Task<ActionResult> Delete(string uuid)
+        [Authorize(Roles = "CLIENTE_ADM_ROLE")]
+        public async Task<ActionResult> Delete(Guid uuid)
         {
             try
             {
-                await clienteService.Delete(Guid.Parse(uuid));
+                await clienteService.Delete(uuid);
             }
             catch (Exception ex)
             {
