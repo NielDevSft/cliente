@@ -1,21 +1,32 @@
-## Inicializar projeto
+# Cliente API
 
-Para rodar o sistema em desenvolvimento é nescessário apenas executar `docker-compose up --build --remove-orphans -d` e estará disponibilizada na link [localhost](http://localhost:5003/index.html)
+API responsavel pelo gerenciamento de clientes.
 
-## Sobre
+## Visão geral
 
-Este microserviço foi desenvolvido para funcionar em conjunto com a API de autenticação disponível em [app-account](https://github.com/NielDevSft/app-account). Futuramente, será integrado ao meu portfólio no projeto [portfolio-fullstack-microfrontend](https://github.com/NielDevSft/portfolio-fullstack-microfrontend), fazendo parte de um conjunto de microfrontends junto com outras aplicações. O frontend que atualmente implementa suas funcionalidades é o mesmo da aplicação [empresa](https://github.com/NielDevSft/empresa). Todas as operações são autenticadas com JWT e o sistema está sendo preparado para facilitar a escalabilidade no futuro.
+Esta API foi desenvolvida em C# utilizando o framework .NET Core. Ela fornece funcionalidades para gerenciamento de clientes, aplicando boas práticas de desenvolvimento contando com uma camada de autenticação em JWT.
+Para testar a API, comente as '[Authorize]' notations nas controllers ou baixe também a API (JWTAuthentication)[https://github.com/NielDevSft/JWTAuthentication], e crie um usuario, uma role com o name `CLIENTE_ADM_ROLE`, e relacione os dois pelo serviço POST: (Authentication API) `/api/Usuarios/{uuid}/Roles`.
 
-## Integrações
+## Pré-requisitos
 
-- **API de Autenticação**: Este microserviço trabalha em conjunto com a API de autenticação fornecida em [app-account](https://github.com/NielDevSft/app-account).
-- **Projeto Portfolio Fullstack Microfrontend**: Será integrado ao projeto [portfolio-fullstack-microfrontend](https://github.com/NielDevSft/portfolio-fullstack-microfrontend) como parte de um conjunto de microfrontends.
-- **Frontend**: As funcionalidades deste microserviço são acessadas pelo frontend da aplicação [empresa](https://github.com/NielDevSft/empresa).
+- Docker na versão mais atual
 
-## Autenticação
+## Instalação
 
-Todas as operações neste microserviço são autenticadas utilizando JWT (JSON Web Tokens).
+1. Clone este repositório.
+2. Dentro da pasta raiz do projeto rode o comando `docker-compose up --build --remove-orphans -d`
+3. Acesse (Cliente API)[http://localhost:5003/index.html]
 
-## Escalabilidade
+## Contribuição
 
-O sistema está sendo projetado e implementado com foco na escalabilidade, facilitando futuras expansões e aumento da capacidade conforme necessário.
+Contribuições são bem-vindas! Se você quiser contribuir com este projeto, por favor siga estas etapas:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para a sua feature (`git checkout -b feature/MinhaFeature`).
+3. Faça commit das suas mudanças (`git commit -am 'Adicione uma nova feature'`).
+4. Faça push para a branch (`git push origin feature/MinhaFeature`).
+5. Abra um Pull Request.
+
+## Autor
+
+[Daniel da silva Figueiredo](https://github.com/NielDevSft) - Desenvolvedor FullCycle.
