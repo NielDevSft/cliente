@@ -18,7 +18,7 @@ namespace ClienteAPI.Application.Services
             
             await Task.Run(() => _clienteRepository.Add(cliente));
 
-            _clienteRepository.SaveChanges();
+            await _clienteRepository.SaveChanges();
             
             return cliente;
         }
@@ -26,7 +26,7 @@ namespace ClienteAPI.Application.Services
         public async Task Delete(Guid uuid)
         {            
             await Task.Run(() => _clienteRepository.Remove(uuid));
-            _clienteRepository.SaveChanges();
+            await _clienteRepository.SaveChanges();
             
         }
 
@@ -34,7 +34,7 @@ namespace ClienteAPI.Application.Services
         {
             var clienteList = new List<Cliente>();
 
-            clienteList.AddRange(await _clienteRepository.FindAllWhereAsync(i => !i.Removed));
+            clienteList.AddRange(await _clienteRepository.FindAllWhere(i => !i.Removed));
 
             
             return clienteList;
@@ -43,7 +43,7 @@ namespace ClienteAPI.Application.Services
         public async Task<Cliente> GetById(Guid uuid)
         {
             var clienteFound = await _clienteRepository
-                .GetByIdAsync(uuid);
+                .GetById(uuid);
 
             if (clienteFound! == null!)
             {
@@ -56,7 +56,7 @@ namespace ClienteAPI.Application.Services
 
         public async Task<Cliente> Update(Guid uuid, Cliente cliente)
         {
-            var clienteExisting = _clienteRepository.GetById(uuid);
+            var clienteExisting = await _clienteRepository.GetById(uuid);
 
             if (!cliente.IsValid())
                 throw new Exception(JsonConvert
@@ -70,7 +70,7 @@ namespace ClienteAPI.Application.Services
             clienteExisting.ValRenda = cliente.ValRenda;
 
             await Task.Run(() => _clienteRepository.Update(clienteExisting));
-            _clienteRepository.SaveChanges();
+            await _clienteRepository.SaveChanges();
             
             return cliente;
         }

@@ -5,18 +5,15 @@ namespace ClienteAPI.Domain.Core.Interfaces
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : Entity<TEntity>
     {
-        void Add(TEntity obj);
-
-        void Update(TEntity obj);
-        TEntity? FirstOrDefault(Expression<Func<TEntity, bool>> predicate, params string[] includes);
-        ICollection<TEntity> FindAll(params string[] includes);
-        ICollection<TEntity> FindAllWhere(Expression<Func<TEntity, bool>> predicate, params string[] includes);
-        void Remove(Guid uuid);
-        void Remove(TEntity obj);
-        int SaveChanges();
-        TEntity? GetById(Guid uuid, params string[] includes);
-        Task<TEntity?> GetByIdAsync(Guid uuid, params string[] includes);
-        Task<ICollection<TEntity>> FindAllWhereAsync(Expression<Func<TEntity, bool>> predicate, params string[] includes);
+        Task Add(TEntity obj);
+        Task Update(TEntity obj);
+        Task<TEntity> FirstOrDefault(Expression<Func<TEntity, bool>> predicate, params string[] includes);
+        Task<List<TEntity>> FindAll(params string[] includes);
+        Task<List<TEntity>> FindAllWhere(Expression<Func<TEntity, bool>> predicate, params string[] includes);
+        Task Remove(Guid uuid);
+        Task Remove(TEntity obj);
+        Task<int> SaveChanges();
+        Task<TEntity> GetById(Guid uuid, params string[] includes);
     }
 }
 
